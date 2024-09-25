@@ -1,4 +1,4 @@
-import { Component, type WritableSignal, signal, inject } from '@angular/core';
+import { Component, type WritableSignal, signal, inject, type OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { toggleEffect } from './effect';
@@ -12,7 +12,7 @@ import { Aura } from 'primeng/themes/aura';
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 	private config = inject(PrimeNGConfig);
 	$switch: WritableSignal<boolean> = signal<boolean>(false);
 
@@ -22,6 +22,10 @@ export class AppComponent {
 		this.config.theme.set({ preset: Aura });
 		toggleEffect(this.$switch, this.$label);
 	}
+
+	ngOnInit() {
+        this.config.ripple.set(true);
+    }
 
 	onClick = () => {
 		this.$switch.update((v) => !v);
